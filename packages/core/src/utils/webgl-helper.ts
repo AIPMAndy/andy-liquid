@@ -27,11 +27,12 @@ export function supportsWebGL(): boolean {
  */
 export function supportsBackdropFilter(): boolean {
   const testElement = document.createElement('div')
-  testElement.style.backdropFilter = 'blur(1px)'
-  testElement.style.webkitBackdropFilter = 'blur(1px)'
+  const style = testElement.style as any
+  style.backdropFilter = 'blur(1px)'
+  style.webkitBackdropFilter = 'blur(1px)'
   const supported =
-    testElement.style.backdropFilter === 'blur(1px)' ||
-    testElement.style.webkitBackdropFilter === 'blur(1px)'
+    style.backdropFilter === 'blur(1px)' ||
+    style.webkitBackdropFilter === 'blur(1px)'
   return supported
 }
 

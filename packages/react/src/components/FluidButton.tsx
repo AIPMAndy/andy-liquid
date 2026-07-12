@@ -33,7 +33,7 @@ export const FluidButton = forwardRef<HTMLButtonElement, FluidButtonProps>(
       children,
       ...props
     },
-    ref
+    _ref
   ) => {
     const buttonRef = useRef<HTMLButtonElement>(null)
     const magneticEffectRef = useRef<MagneticEffect | null>(null)

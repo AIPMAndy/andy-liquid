@@ -1,10 +1,11 @@
 "use client"
 
-import { useEffect, useRef, useCallback } from 'react'
+import { useEffect, useRef, useMemo, useState } from 'react'
 import type { LiquidCanvasConfig } from '@andy-liquid/core'
 import { initLiquidEffect } from '@andy-liquid/core'
 
-export interface LiquidCanvasProps extends LiquidCanvasConfig {
+export interface LiquidCanvasProps extends Omit<LiquidCanvasConfig, 'text'> {
+  text?: string | string[]
   className?: string
   style?: React.CSSProperties
 }
@@ -29,23 +30,32 @@ export function LiquidCanvas({
   style = {},
 }: LiquidCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const canvasId = useRef(`liquid-canvas-${Math.random().toString(36).slice(2, 11)}`)
+  const [isClient, setIsClient] = useState(false)
 
-  const config: LiquidCanvasConfig = {
-    text,
-    subText,
-    tagline,
-    backgroundColor,
-    textColor,
-    intensity,
-    metalness,
-    roughness,
-    displacementScale,
-    enableRain,
-  }
+  // Ensure we're on client side
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
+
+  // Convert string to array if needed and memoize config
+  const config = useMemo<LiquidCanvasConfig>(() => {
+    const textArray = text ? (Array.isArray(text) ? text : [text]) : undefined
+    return {
+      text: textArray,
+      subText,
+      tagline,
+      backgroundColor,
+      textColor,
+      intensity,
+      metalness,
+      roughness,
+      displacementScale,
+      enableRain,
+    }
+  }, [text, subText, tagline, backgroundColor, textColor, intensity, metalness, roughness, displacementScale, enableRain])
 
   useEffect(() => {
-    if (!canvasRef.current) return
+    if (!isClient || !canvasRef.current) return
 
     const app = initLiquidEffect(canvasRef.current, config)
 
@@ -54,7 +64,12 @@ export function LiquidCanvas({
         app.dispose()
       }
     }
-  }, [text, subText, tagline, backgroundColor, textColor, intensity, metalness, roughness, displacementScale, enableRain])
+  }, [isClient, config])
+
+  // Don't render anything on server
+  if (!isClient) {
+    return null
+  }
 
   return (
     <div
@@ -72,7 +87,7 @@ export function LiquidCanvas({
     >
       <canvas
         ref={canvasRef}
-        id={canvasId.current}
+        id="liquid-canvas"
         style={{
           position: 'fixed',
           inset: 0,

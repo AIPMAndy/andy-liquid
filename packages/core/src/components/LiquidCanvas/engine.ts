@@ -13,7 +13,9 @@ export function generateTextImage(config: LiquidCanvasConfig): string | null {
     textColor = '#1d1d1f'
   } = config
 
-  const dpr = window.devicePixelRatio || 1
+  // Use lower resolution for better performance and smaller data URL
+  // The liquid distortion effect doesn't need full DPR precision
+  const dpr = 1 // Fixed to 1x to keep data URL size manageable
   const offscreen = document.createElement('canvas')
   const w = window.innerWidth
   const h = window.innerHeight
@@ -94,7 +96,7 @@ export function generateTextImage(config: LiquidCanvasConfig): string | null {
     }
   }
 
-  return offscreen.toDataURL('image/png')
+  return offscreen.toDataURL('image/jpeg', 0.9)
 }
 
 /**
@@ -107,35 +109,59 @@ export function initLiquidEffect(
   const dataUrl = generateTextImage(config)
   if (!dataUrl) return null
 
-  // Load Three.js components via CDN
-  const script = document.createElement('script')
-  script.type = 'module'
-  script.textContent = `
-    import LiquidBackground from 'https://cdn.jsdelivr.net/npm/threejs-components@0.0.30/build/backgrounds/liquid1.min.js';
+  // Store canvas reference globally before async init
+  const canvasKey = `__liquidCanvas_${canvas.id}`;
+  (window as any)[canvasKey] = canvas;
 
-    const app = LiquidBackground(document.getElementById('${canvas.id}'));
-    if (app) {
-      app.loadImage('${dataUrl}');
-      app.liquidPlane.material.metalness = ${config.metalness ?? 0.35};
-      app.liquidPlane.material.roughness = ${config.roughness ?? 0.45};
-      app.liquidPlane.uniforms.displacementScale.value = ${config.displacementScale ?? 2};
-      app.setRain(${config.enableRain ?? false});
-      window.__liquidApp_${canvas.id} = app;
+  // Wait for CDN module to load (loaded via script tag in HTML head)
+  (async () => {
+    try {
+      // Poll for global LiquidBackground (loaded by script tag)
+      let attempts = 0;
+      while (!(window as any).LiquidBackground && attempts < 50) {
+        await new Promise(resolve => setTimeout(resolve, 100));
+        attempts++;
+      }
+
+      const LiquidBackground = (window as any).LiquidBackground;
+      if (!LiquidBackground) {
+        console.error('[LiquidCanvas] LiquidBackground not loaded after 5s');
+        return;
+      }
+
+      const canvas = (window as any)[canvasKey];
+      if (!canvas) {
+        console.error('[LiquidCanvas] Canvas not found');
+        return;
+      }
+
+      const app = LiquidBackground(canvas);
+      if (!app) {
+        console.error('[LiquidCanvas] Initialization failed');
+        return;
+      }
+
+      app.loadImage(dataUrl);
+      app.liquidPlane.material.metalness = config.metalness ?? 0.35;
+      app.liquidPlane.material.roughness = config.roughness ?? 0.45;
+      app.liquidPlane.uniforms.displacementScale.value = config.displacementScale ?? 2;
+      app.setRain(config.enableRain ?? false);
+
+      (window as any)[`__liquidApp_${canvas.id}`] = app;
+    } catch (error) {
+      console.error('[LiquidCanvas] Init error:', error);
     }
-  `
-  document.body.appendChild(script)
+  })();
 
-  // Return a mock app object that will be populated by the script
+  // Return app object
   return {
     dispose: () => {
       const app = (window as any)[`__liquidApp_${canvas.id}`]
       if (app && app.dispose) {
         app.dispose()
       }
-      if (script.parentNode) {
-        script.parentNode.removeChild(script)
-      }
       delete (window as any)[`__liquidApp_${canvas.id}`]
+      delete (window as any)[canvasKey]
     }
   }
 }
