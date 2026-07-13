@@ -149,11 +149,19 @@ export function initLiquidEffect(
         return;
       }
 
-      app.loadImage(dataUrl);
-      app.liquidPlane.material.metalness = config.metalness ?? 0.35;
-      app.liquidPlane.material.roughness = config.roughness ?? 0.45;
-      app.liquidPlane.uniforms.displacementScale.value = config.displacementScale ?? 2;
-      app.setRain(config.enableRain ?? false);
+      if (app.loadImage) {
+        app.loadImage(dataUrl);
+      }
+      
+      if (app.liquidPlane) {
+        app.liquidPlane.material.metalness = config.metalness ?? 0.35;
+        app.liquidPlane.material.roughness = config.roughness ?? 0.45;
+        app.liquidPlane.uniforms.displacementScale.value = config.displacementScale ?? 2;
+      }
+      
+      if (app.setRain) {
+        app.setRain(config.enableRain ?? false);
+      }
 
       window[`__liquidApp_${canvas.id}`] = app;
     } catch (error) {
