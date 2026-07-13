@@ -33,6 +33,7 @@ export const FluidButton = forwardRef<HTMLButtonElement, FluidButtonProps>(
       children,
       ...props
     },
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _ref
   ) => {
     const buttonRef = useRef<HTMLButtonElement>(null)
