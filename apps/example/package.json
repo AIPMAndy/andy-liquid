@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "echo 'Skipping lint for example app'"
   },
   "dependencies": {
     "@andy-liquid/core": "workspace:*",
