@@ -1,5 +1,13 @@
 import type { LiquidCanvasConfig, LiquidApp } from './types'
 
+// Define window extensions to avoid 'any' type
+interface WindowWithLiquid extends Window {
+  LiquidBackground?: (canvas: HTMLCanvasElement) => LiquidApp;
+  [key: string]: unknown;
+}
+
+declare const window: WindowWithLiquid;
+
 /**
  * Generate text image for liquid effect
  * Based on liquid-effect-animation by StarKnightt
@@ -111,25 +119,25 @@ export function initLiquidEffect(
 
   // Store canvas reference globally before async init
   const canvasKey = `__liquidCanvas_${canvas.id}`;
-  (window as any)[canvasKey] = canvas;
+  window[canvasKey] = canvas;
 
   // Wait for CDN module to load (loaded via script tag in HTML head)
   (async () => {
     try {
       // Poll for global LiquidBackground (loaded by script tag)
       let attempts = 0;
-      while (!(window as any).LiquidBackground && attempts < 50) {
+      while (!window.LiquidBackground && attempts < 50) {
         await new Promise(resolve => setTimeout(resolve, 100));
         attempts++;
       }
 
-      const LiquidBackground = (window as any).LiquidBackground;
+      const LiquidBackground = window.LiquidBackground;
       if (!LiquidBackground) {
         console.error('[LiquidCanvas] LiquidBackground not loaded after 5s');
         return;
       }
 
-      const canvas = (window as any)[canvasKey];
+      const canvas = window[canvasKey] as HTMLCanvasElement;
       if (!canvas) {
         console.error('[LiquidCanvas] Canvas not found');
         return;
@@ -147,7 +155,7 @@ export function initLiquidEffect(
       app.liquidPlane.uniforms.displacementScale.value = config.displacementScale ?? 2;
       app.setRain(config.enableRain ?? false);
 
-      (window as any)[`__liquidApp_${canvas.id}`] = app;
+      window[`__liquidApp_${canvas.id}`] = app;
     } catch (error) {
       console.error('[LiquidCanvas] Init error:', error);
     }
@@ -156,12 +164,12 @@ export function initLiquidEffect(
   // Return app object
   return {
     dispose: () => {
-      const app = (window as any)[`__liquidApp_${canvas.id}`]
+      const app = window[`__liquidApp_${canvas.id}`] as LiquidApp | undefined
       if (app && app.dispose) {
         app.dispose()
       }
-      delete (window as any)[`__liquidApp_${canvas.id}`]
-      delete (window as any)[canvasKey]
+      delete window[`__liquidApp_${canvas.id}`]
+      delete window[canvasKey]
     }
   }
 }
