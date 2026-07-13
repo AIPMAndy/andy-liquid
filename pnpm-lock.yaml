@@ -66,15 +66,24 @@ importers:
 
   packages/core:
     devDependencies:
+      '@eslint/js':
+        specifier: ^9.0.0
+        version: 9.39.5
       '@types/node':
         specifier: ^20.11.30
         version: 20.19.43
+      eslint:
+        specifier: ^9.0.0
+        version: 9.39.5(jiti@2.7.0)
       tsup:
         specifier: ^8.0.2
         version: 8.5.1(jiti@2.7.0)(postcss@8.5.17)(typescript@5.9.3)
       typescript:
         specifier: ^5.4.5
         version: 5.9.3
+      typescript-eslint:
+        specifier: ^8.0.0
+        version: 8.63.0(eslint@9.39.5(jiti@2.7.0))(typescript@5.9.3)
 
   packages/react:
     dependencies:
