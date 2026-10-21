@@ -20,22 +20,23 @@
 🌊 **液态画布** - 基于 Three.js 的 3D 液态扭曲效果，带来流动的视觉冲击  
 🪟 **玻璃面板** - 完美还原 Apple 风格的玻璃态效果，支持无障碍访问  
 🎯 **流体按钮** - 磁吸式悬停效果，物理级弹簧动画  
-🔄 **形态过渡** - 丝滑的形状变换动画  
-🧭 **液态导航** - 浮岛和 Dock 风格导航栏  
 
 ## 🚀 快速开始
 
 ### 安装
 
+> 目前还没有发布到 npm，需要从源码构建（Node ≥ 18，pnpm ≥ 9）：
+
 ```bash
-# npm
-npm install @andy-liquid/react
+git clone https://github.com/AIPMAndy/andy-liquid.git
+cd andy-liquid
+pnpm install
+pnpm build
 
-# pnpm
-pnpm add @andy-liquid/react
-
-# bun
-bun add @andy-liquid/react
+# 打包成本地 tgz，再装进你的项目
+cd packages/core && pnpm pack --pack-destination ../../dist-pkg && cd ../..
+cd packages/react && pnpm pack --pack-destination ../../dist-pkg && cd ../..
+npm install /path/to/andy-liquid/dist-pkg/andy-liquid-core-0.1.0.tgz /path/to/andy-liquid/dist-pkg/andy-liquid-react-0.1.0.tgz
 ```
 
 ### 基础使用
@@ -238,15 +239,23 @@ MIT © Andy - 自由使用，保留署名
 🌊 **Liquid Canvas** - Three.js powered 3D liquid distortion effects  
 🪟 **Glass Panels** - Apple-style glassmorphism with accessibility  
 🎯 **Fluid Buttons** - Magnetic hover with spring physics  
-🔄 **Morph Transitions** - Smooth shape-shifting animations  
-🧭 **Liquid Navigation** - Floating island and dock-style navigation  
 
 ## 🚀 Quick Start
 
 ### Installation
 
+> Not published to npm yet. Build from source (Node ≥ 18, pnpm ≥ 9):
+
 ```bash
-npm install @andy-liquid/react
+git clone https://github.com/AIPMAndy/andy-liquid.git
+cd andy-liquid
+pnpm install
+pnpm build
+
+# Pack local tarballs, then install them in your project
+cd packages/core && pnpm pack --pack-destination ../../dist-pkg && cd ../..
+cd packages/react && pnpm pack --pack-destination ../../dist-pkg && cd ../..
+npm install /path/to/andy-liquid/dist-pkg/andy-liquid-core-0.1.0.tgz /path/to/andy-liquid/dist-pkg/andy-liquid-react-0.1.0.tgz
 ```
 
 ### Basic Usage
