@@ -19,15 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
----
-
-## Credits
-
-Andy Liquid builds upon the following open-source projects:
-
-- threejs-components by Kevin Levron (https://github.com/klevron/threejs-components)
-- liquid-effect-animation by StarKnightt (https://github.com/StarKnightt/liquid-effect-animation)
-- taste-skill by Leonxlnx (https://github.com/Leonxlnx/taste-skill)
-
-We are grateful to these authors for their contributions to the open-source community.
