@@ -178,23 +178,24 @@ Andy Liquid 融合了顶级设计实践：
 - **Tailwind CSS** - 实用优先的样式方案
 - **Turbo** - 高性能 Monorepo 构建
 
-## 🎪 在线演示
+## 🎪 本地演示
 
-查看完整的交互式示例：
+仓库提供 [Next.js 交互示例](./apps/example/)。使用 Node.js 20.9+ 与仓库指定的 pnpm 9.0.0，在仓库根目录运行：
 
-- 🌐 [Live Demo](https://andy-liquid.vercel.app)
-- 📚 [Storybook](https://andy-liquid-storybook.vercel.app)
-- 🎮 [CodeSandbox](https://codesandbox.io/s/andy-liquid)
+```sh
+pnpm install
+pnpm build
+pnpm --filter example dev
+```
 
-## 📖 完整文档
+打开 [http://localhost:3000](http://localhost:3000) 体验。
 
-访问 [andy-liquid.dev](https://andy-liquid.dev) 获取：
+## 📖 文档
 
-- 📘 完整 API 文档
-- 🎓 使用教程
-- 🎨 设计指南
-- 💡 最佳实践
-- 🔧 迁移指南
+- [组件用法](#-组件)
+- [示例代码](./examples/)
+- [设计资料](./design/)
+- [组件包源码](./packages/)
 
 ## 🤝 贡献
 
@@ -296,7 +297,7 @@ Andy Liquid integrates best practices from:
 
 ## 📖 Documentation
 
-Visit [andy-liquid.dev](https://andy-liquid.dev) for complete documentation.
+See the [local interactive demo](#-本地演示), [examples](./examples/), and [package source](./packages/).
 
 ## 🤝 Contributing
 
