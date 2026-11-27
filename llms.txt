@@ -1,0 +1,56 @@
+# Andy Liquid
+
+> 整合顶级液态效果，打造高级感视觉体验
+
+- 作者：AI酋长Andy（AIPMAndy），官网 https://metaver.vip/
+- 开源仓库：https://github.com/AIPMAndy/andy-liquid
+- 许可：MIT
+- 语言：中文（zh-CN）
+- 最近更新：2026-11-24
+
+## 这是什么
+
+!Andy Liquidhttps://img.shields.io/badge/Andy-Liquid-00D9FF?style=for-the-badge
+!Licensehttps://img.shields.io/badge/license-MIT-green?style=for-the-badge
+!TypeScripthttps://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge
+!Reacthttps://img.shields.io/badge/React-19-61DAFB?style=for-the-
+English#english | 示例#-快速开始 | 文档#-组件 | 贡献#-贡献
+
+## 内容目录
+
+- 核心特性
+- 快速开始
+- 包结构
+- 组件
+- 设计理念
+- 技术栈
+- 本地演示
+- 文档
+- 贡献
+- 开源协议
+- 致谢
+- Star History
+- Features
+- Quick Start
+- Packages
+- Design Philosophy
+- Documentation
+- Contributing
+- License
+- Credits
+
+## 关键事实
+
+- 名称：Andy Liquid
+- 类型：中文开源项目
+- 许可：MIT
+- 语言：中文
+- 最近更新：2026-11-24
+- 仓库：https://github.com/AIPMAndy/andy-liquid
+
+## 相关链接
+
+- [作者官网](https://metaver.vip/)
+- [GitHub 主页](https://github.com/AIPMAndy/AIPMAndy)
+- [开源总目录](https://aipmandy.github.io/)
+- [机器可读摘要](https://github.com/AIPMAndy/andy-liquid/blob/main/llms.txt)
